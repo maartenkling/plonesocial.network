@@ -25,6 +25,8 @@ class NetworkGraph(Persistent, Explicit):
     def __init__(self, context=None):
         self._following = OOBTree.OOBTree()
         self._followers = OOBTree.OOBTree()
+        self._pending_following = OOBTree.OOBTree()
+        self._pending_followers = OOBTree.OOBTree()
 
     def set_follow(self, actor, other):
         """User <actor> subscribes to user <other>"""
@@ -66,6 +68,61 @@ class NetworkGraph(Persistent, Explicit):
         except KeyError:
             return ()
 
+    def get_pending_followers(self, actor):
+        """List all users that <actor> subscribes to"""
+        assert(actor == str(actor))
+        try:
+            return self._pending_followers[actor]
+        except KeyError:
+            return ()
+
+    def get_pending_following(self, actor):
+        """List all users that <actor> subscribes to"""
+        assert(actor == str(actor))
+        try:
+            return self._pending_following[actor]
+        except KeyError:
+            return ()
+
+    def set_pending_follow(self, actor, other):
+        """User <actor> subscribes to user <other>"""
+        assert(actor == str(actor))
+        assert(other == str(other))
+        # insert user if not exists
+        self._pending_following.insert(actor, OOBTree.OOTreeSet())
+        self._pending_followers.insert(other, OOBTree.OOTreeSet())
+        # add follow subscription
+        self._pending_following[actor].insert(other)
+        self._pending_followers[other].insert(actor)
+
+    def decline_pending_follow(self, actor, other):
+        """User <actor> subscribes to user <other>"""
+        assert(actor == str(actor))
+        assert(other == str(other))
+        # remove user if exists
+        # remove from pending
+        try:
+            #only do this once
+            self._pending_following[other].remove(actor)
+            self._pending_followers[actor].remove(other)
+        except KeyError:
+            pass
+
+    def recall_pending_follow(self, actor, other):
+        """User <actor> subscribes to user <other>"""
+        assert(actor == str(actor))
+        assert(other == str(other))
+        # remove user if exists
+        # remove from pending
+        try:
+            #only do this once
+            self._pending_following[other].remove(actor)
+            self._pending_followers[actor].remove(other)
+        except KeyError:
+            pass
+
     def clear(self):
         self._following = OOBTree.OOBTree()
         self._followers = OOBTree.OOBTree()
+        self._pending_following = OOBTree.OOBTree()
+        self._pending_followers = OOBTree.OOBTree()
