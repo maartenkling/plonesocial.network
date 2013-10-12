@@ -1,8 +1,8 @@
 Changelog
 =========
 
-0.5.3-vriendinnen-online (unreleased)
-------------------
+0.5.3-vriendinnen-online (2013-10-12)
+-------------------------------------
 
 * add pending support [maartenkling]
 
