@@ -1,7 +1,13 @@
 Changelog
 =========
 
-0.5.2-vriendinnen-online (2013-10-12)
+0.5.3-vriendinnen-online (unreleased)
+------------------
+
+* add pending support [maartenkling]
+
+
+0.5.2 (2013-10-12)
 -------------------------------------
 
 * bump version after having pypi release confusion [gyst]

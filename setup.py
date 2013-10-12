@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '0.5.2-vriendinnen-online'
+version = '0.5.3-vriendinnen-online'
 
 long_description = (
     open('README.rst').read()
