@@ -1,0 +1,3 @@
+recursive-include plonesocial *
+include *
+global-exclude *.pyc
